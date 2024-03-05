@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+
+{% extends 'default.html' %}
+{% load censor %}
+
+
+{% block content %}
+{% if post %}
+<table>
+   <tr>
+       <td>Название</td>
+       <td>Дата загрузки</td>
+       <td>Текст</td>
+       <td>Категория</td>
+   </tr>
+    <tr>
+        <td>{{ post.title }}</td>
+        <td>{{ post.time_in|date:"d M Y" }}</td>
+        <td>{{ post.text|censor }}</td>
+        {% for cat in post.category.all %}
+        <td>{{ cat.name }}</td>
+        {% endfor %}
+    </tr>
+</table>
+{% else %}
+<h3>Публикаций нет!</h3>
+{% endif %}
+{% endblock content %}
